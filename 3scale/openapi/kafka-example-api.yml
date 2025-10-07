@@ -1,0 +1,260 @@
+swagger: '2.0'
+info:
+  description: Fuse Kafka example project for test purposes
+  version: 1.0.0-SNAPSHOT
+  title: kafka-example-api
+host: 127.0.0.1:8080
+tags:
+  - name: Kafka
+schemes:
+  - http
+paths:
+  /v1/kafka/produce:
+    post:
+      tags:
+        - Kafka
+      operationId: post-kafka-producer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: msg
+          in: query
+          description: Message for Topic
+          required: true
+          type: string
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/Contactmoment'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+  /v1/kafka/timeout:
+    get:
+      tags:
+        - Kafka
+      operationId: route3
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: seconds
+          in: query
+          description: Timeout in seconds
+          required: true
+          type: string
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/Contactmoment'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+definitions:
+  ContactGegeven:
+    type: object
+    properties:
+      soort:
+        type: string
+      detailSoort:
+        type: string
+      waarde:
+        type: string
+  Contactmoment:
+    type: object
+    properties:
+      identificatie:
+        type: string
+      relatie:
+        $ref: '#/definitions/RelatieNAW'
+      kanaal:
+        type: string
+      richting:
+        type: string
+      datum:
+        type: string
+        format: date-time
+      omschrijving:
+        type: string
+      medewerker:
+        $ref: '#/definitions/Medewerker'
+  Email:
+    type: object
+    properties:
+      soort:
+        type: string
+      detailSoort:
+        type: string
+      emailAdres:
+        type: string
+  ContactGegevens:
+    type: object
+    properties:
+      telefoonnummers:
+        type: array
+        items:
+          $ref: '#/definitions/Telefoonnummer'
+      emailAdressen:
+        type: array
+        items:
+          $ref: '#/definitions/Email'
+      overigeContactGegevens:
+        type: array
+        items:
+          $ref: '#/definitions/ContactGegeven'
+  RechtsPersoon:
+    type: object
+    properties:
+      naam:
+        type: string
+      btwNummer:
+        type: string
+      kvkNummer:
+        type: string
+      organisatievorm:
+        type: string
+  RelatieNAW:
+    type: object
+    properties:
+      identificatie:
+        type: string
+      natuurlijkPersoon:
+        $ref: '#/definitions/NatuurlijkPersoon'
+      rechtsPersoon:
+        $ref: '#/definitions/RechtsPersoon'
+      adressen:
+        type: array
+        items:
+          $ref: '#/definitions/Adres'
+      contactGegevens:
+        $ref: '#/definitions/ContactGegevens'
+  Medewerker:
+    type: object
+    properties:
+      identificatie:
+        type: string
+      soort:
+        type: string
+      naam:
+        type: string
+  Telefoonnummer:
+    type: object
+    properties:
+      soort:
+        type: string
+      detailSoort:
+        type: string
+      landnummer:
+        type: string
+      netnummer:
+        type: string
+      abonneenummer:
+        type: string
+      extensie:
+        type: string
+      dagdelen:
+        type: string
+  NatuurlijkPersoon:
+    type: object
+    properties:
+      voornaam:
+        type: string
+      initialen:
+        type: string
+      tussenvoegsels:
+        type: string
+      achternaam:
+        type: string
+      roepnaam:
+        type: string
+      geslacht:
+        type: string
+      geboortedatum:
+        type: string
+      overlijdensdatum:
+        type: string
+      burgerlijkeStaat:
+        type: string
+      nationaliteit:
+        type: string
+      bsn:
+        type: integer
+        format: int32
+  Adres:
+    type: object
+    properties:
+      soort:
+        type: string
+      straatnaam:
+        type: string
+      huisnummer:
+        type: integer
+        format: int32
+      huisletter:
+        type: string
+      huisnummertoevoeging:
+        type: string
+      adres:
+        type: string
+      postcode:
+        type: string
+      woonplaats:
+        type: string
+      buurt:
+        type: string
+      wijk:
+        type: string
+      corporatieBuurt:
+        type: string
+      corporatieWijk:
+        type: string
+      gemeente:
+        type: string
+      provincie:
+        type: string
+      land:
+        type: string
+      geometrie:
+        type: string
+      eenheidNevenadressen:
+        type: string
+      eenheidAdres:
+        type: string
+      bag:
+        type: string
+  ErrorResponse:
+    type: object
+    properties:
+      timestamp:
+        type: integer
+        format: int64
+      status:
+        type: integer
+        format: int32
+      error:
+        type: string
+      message:
+        type: string
