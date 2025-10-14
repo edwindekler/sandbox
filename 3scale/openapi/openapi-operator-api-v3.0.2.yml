@@ -3,7 +3,7 @@ info:
   title: operator-api
   version: 0.0.1
   description: API for anonymizing data in Tobias365
-x-3scale-product:
+X-3scale-product:
   metrics:  ## map[string]github.com/3scale/3scale-operator/apis/capabilities/v1beta1.MetricSpec
     metric01:  ## This system name needs to be unique across all methods AND metrics
       friendlyName: "My Metric 01"
