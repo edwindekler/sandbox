@@ -327,10 +327,10 @@ servers:
 security:
   - OAuth2: []
 x-3scale-product:
-  applicationPlans:
+  applicationPlans:  ## map[string]github.com/3scale/3scale-operator/apis/capabilities/v1beta1.ApplicationPlanSpec
     premium:
       published: true
-  policies:
+  policies:  ## []github.com/3scale/3scale-operator/apis/capabilities/v1beta1.PolicyConfig
     - name: cors
       version: builtin
       configuration:
