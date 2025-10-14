@@ -308,21 +308,53 @@ components:
       properties:
         identificatie:
           type: string
-#  securitySchemes:
-#    OAuth2:
-#      type: oauth2
-#      flows:
-#        clientCredentials:
-#          tokenUrl: https://sso-rh-sso.apps.openshift-ota.nah-de-alliantie.nl/auth/realms/3scale-stg/protocol/openid-connect/token
-#          scopes: {}
-#        password:
-#          tokenUrl: https://sso-rh-sso.apps.openshift-ota.nah-de-alliantie.nl/auth/realms/3scale-stg/protocol/openid-connect/token
-#          scopes: {}
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://sso-rh-sso.apps.openshift-ota.nah-de-alliantie.nl/auth/realms/3scale-stg/protocol/openid-connect/token
+          scopes: {}
+        password:
+          tokenUrl: https://sso-rh-sso.apps.openshift-ota.nah-de-alliantie.nl/auth/realms/3scale-stg/protocol/openid-connect/token
+          scopes: {}
 tags:
   - name: alive-healthcheck
   - name: IBAN
   - name: Relaties
 servers:
   - url: https://anonymizer-api-rh-apicast-stg.apps.openshift-ota.nah-de-alliantie.nl/
-#security:
-#  - OAuth2: []
+security:
+  - OAuth2: []
+x-3scale-product:
+  applicationPlans:
+    premium:
+      published: true
+  policies:
+    - name: cors
+      version: builtin
+      configuration:
+        allow_headers:
+          - Authorization
+        allow_credentials: true
+        allow_methods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+          - PATCH
+          - HEAD
+          - OPTIONS
+        allow_origin: "*"
+      enabled: true
+    - name: upstream_connection
+      version: builtin
+      configuration:
+        send_timeout: 300
+        connect_timeout: 60
+        read_timeout: 300
+      enabled: true
+    - name: apicast
+      version: builtin
+      configuration: {}
+      enabled: true
