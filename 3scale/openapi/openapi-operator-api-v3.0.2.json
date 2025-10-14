@@ -6,49 +6,6 @@
     "description":"API for anonymizing data in Tobias365"
   },
   "paths":{
-    "/healthcheck/alive":{
-      "get":{
-        "tags":[
-          "alive-healthcheck"
-        ],
-        "responses":{
-          "200":{
-            "description":"OK"
-          },
-          "400":{
-            "content":{
-              "application/json":{
-                "schema":{
-                  "$ref":"#/components/schemas/ErrorResponse"
-                }
-              }
-            },
-            "description":"Bad Request"
-          },
-          "401":{
-            "content":{
-              "application/json":{
-                "schema":{
-                  "$ref":"#/components/schemas/ErrorResponse"
-                }
-              }
-            },
-            "description":"Unauthorized"
-          },
-          "500":{
-            "content":{
-              "application/json":{
-                "schema":{
-                  "$ref":"#/components/schemas/ErrorResponse"
-                }
-              }
-            },
-            "description":"Internal Server Error"
-          }
-        },
-        "operationId":"alive-healthcheck"
-      }
-    },
     "/v1/iban":{
       "get":{
         "tags":[
