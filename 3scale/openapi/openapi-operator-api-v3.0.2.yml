@@ -3,6 +3,38 @@ info:
   title: operator-api
   version: 0.0.1
   description: API for anonymizing data in Tobias365
+x-3scale-product:
+  applicationPlans:  ## map[string]github.com/3scale/3scale-operator/apis/capabilities/v1beta1.ApplicationPlanSpec
+    premium:
+      published: true
+  policies:  ## []github.com/3scale/3scale-operator/apis/capabilities/v1beta1.PolicyConfig
+    - name: cors
+      version: builtin
+      configuration:
+        allow_headers:
+          - Authorization
+        allow_credentials: true
+        allow_methods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+          - PATCH
+          - HEAD
+          - OPTIONS
+        allow_origin: "*"
+      enabled: true
+    - name: upstream_connection
+      version: builtin
+      configuration:
+        send_timeout: 300
+        connect_timeout: 60
+        read_timeout: 300
+      enabled: true
+    - name: apicast
+      version: builtin
+      configuration: {}
+      enabled: true
 paths:
   /healthcheck/alive:
     get:
@@ -326,35 +358,3 @@ servers:
   - url: https://anonymizer-api-rh-apicast-stg.apps.openshift-ota.nah-de-alliantie.nl/
 security:
   - OAuth2: []
-x-3scale-product:
-  applicationPlans:  ## map[string]github.com/3scale/3scale-operator/apis/capabilities/v1beta1.ApplicationPlanSpec
-    premium:
-      published: true
-  policies:  ## []github.com/3scale/3scale-operator/apis/capabilities/v1beta1.PolicyConfig
-    - name: cors
-      version: builtin
-      configuration:
-        allow_headers:
-          - Authorization
-        allow_credentials: true
-        allow_methods:
-          - GET
-          - POST
-          - PUT
-          - DELETE
-          - PATCH
-          - HEAD
-          - OPTIONS
-        allow_origin: "*"
-      enabled: true
-    - name: upstream_connection
-      version: builtin
-      configuration:
-        send_timeout: 300
-        connect_timeout: 60
-        read_timeout: 300
-      enabled: true
-    - name: apicast
-      version: builtin
-      configuration: {}
-      enabled: true

@@ -1,488 +1,571 @@
 {
-  "openapi":"3.0.2",
-  "info":{
-    "title":"operator-api",
-    "version":"0.0.1",
-    "description":"API for anonymizing data in Tobias365"
+  "openapi": "3.0.2",
+  "info": {
+    "title": "operator-api",
+    "version": "0.0.1",
+    "description": "API for anonymizing data in Tobias365"
   },
-  "paths":{
-    "/v1/iban":{
-      "get":{
-        "tags":[
+  "x-3scale-product": {
+    "applicationPlans": {
+      "premium": {
+        "published": true
+      }
+    },
+    "policies": [
+      {
+        "name": "cors",
+        "version": "builtin",
+        "configuration": {
+          "allow_headers": [
+            "Authorization"
+          ],
+          "allow_credentials": true,
+          "allow_methods": [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE",
+            "PATCH",
+            "HEAD",
+            "OPTIONS"
+          ],
+          "allow_origin": "*"
+        },
+        "enabled": true
+      },
+      {
+        "name": "upstream_connection",
+        "version": "builtin",
+        "configuration": {
+          "send_timeout": 300,
+          "connect_timeout": 60,
+          "read_timeout": 300
+        },
+        "enabled": true
+      },
+      {
+        "name": "apicast",
+        "version": "builtin",
+        "configuration": {},
+        "enabled": true
+      }
+    ]
+  },
+  "paths": {
+    "/healthcheck/alive": {
+      "get": {
+        "tags": [
+          "alive-healthcheck"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Internal Server Error"
+          }
+        },
+        "operationId": "alive-healthcheck"
+      }
+    },
+    "/v1/iban": {
+      "get": {
+        "tags": [
           "IBAN"
         ],
-        "parameters":[
+        "parameters": [
           {
-            "name":"aantal",
-            "description":"Het aantal IBAN nummers dat gegenereerd moet worden (default is 1).",
-            "schema":{
-              "type":"string"
+            "name": "aantal",
+            "description": "Het aantal IBAN nummers dat gegenereerd moet worden (default is 1).",
+            "schema": {
+              "type": "string"
             },
-            "in":"query",
-            "required":false
+            "in": "query",
+            "required": false
           }
         ],
-        "responses":{
-          "200":{
-            "content":{
-              "text/plain":{
-                "schema":{
-                  "format":"string",
-                  "type":"string"
+        "responses": {
+          "200": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "format": "string",
+                  "type": "string"
                 }
               }
             },
-            "description":"OK"
+            "description": "OK"
           },
-          "400":{
-            "content":{
-              "text/plain":{
-                "schema":{
-                  "$ref":"#/components/schemas/ErrorResponse"
+          "400": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
-            "description":"Bad Request"
+            "description": "Bad Request"
           },
-          "401":{
-            "content":{
-              "text/plain":{
-                "schema":{
-                  "$ref":"#/components/schemas/ErrorResponse"
+          "401": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
-            "description":"Unauthorized"
+            "description": "Unauthorized"
           },
-          "403":{
-            "content":{
-              "text/plain":{
-                "schema":{
-                  "$ref":"#/components/schemas/ErrorResponse"
+          "403": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
-            "description":"Forbidden"
+            "description": "Forbidden"
           },
-          "500":{
-            "content":{
-              "text/plain":{
-                "schema":{
-                  "$ref":"#/components/schemas/ErrorResponse"
+          "500": {
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
-            "description":"Internal Server Error"
+            "description": "Internal Server Error"
           }
         },
-        "operationId":"Get-Random-Iban"
+        "operationId": "Get-Random-Iban"
       }
     },
-    "/v1/relaties":{
-      "put":{
-        "requestBody":{
-          "description":"",
-          "content":{
-            "application/json":{
-              "schema":{
-                "type":"array",
-                "items":{
-                  "$ref":"#/components/schemas/RelatieDetails"
+    "/v1/relaties": {
+      "put": {
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/RelatieDetails"
                 }
               }
             }
           },
-          "required":true
+          "required": true
         },
-        "tags":[
+        "tags": [
           "Relaties"
         ],
-        "parameters":[
+        "parameters": [
           {
-            "name":"bedrijfid",
-            "description":"Sleutel voor het bedrijf waar de relatie onder valt. Default is 'dat'.",
-            "schema":{
-              "type":"string"
+            "name": "bedrijfid",
+            "description": "Sleutel voor het bedrijf waar de relatie onder valt. Default is 'dat'.",
+            "schema": {
+              "type": "string"
             },
-            "in":"query",
-            "required":false
+            "in": "query",
+            "required": false
           }
         ],
-        "responses":{
-          "204":{
-            "description":"No Content"
+        "responses": {
+          "204": {
+            "description": "No Content"
           },
-          "401":{
-            "content":{
-              "application/json":{
-                "schema":{
-                  "$ref":"#/components/schemas/ErrorResponse"
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
-            "description":"Unauthorized"
+            "description": "Unauthorized"
           },
-          "403":{
-            "content":{
-              "application/json":{
-                "schema":{
-                  "$ref":"#/components/schemas/ErrorResponse"
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
-            "description":"Forbidden"
+            "description": "Forbidden"
           },
-          "404":{
-            "content":{
-              "application/json":{
-                "schema":{
-                  "$ref":"#/components/schemas/ErrorResponse"
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
-            "description":"Not Found"
+            "description": "Not Found"
           },
-          "500":{
-            "content":{
-              "application/json":{
-                "schema":{
-                  "$ref":"#/components/schemas/ErrorResponse"
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
-            "description":"Internal Server Error"
+            "description": "Internal Server Error"
           }
         },
-        "operationId":"Put-by-Relation-Id"
+        "operationId": "Put-by-Relation-Id"
       }
     },
-    "/v1/medewerkers":{
-      "put":{
-        "requestBody":{
-          "description":"Update employee details for the given company ID",
-          "content":{
-            "application/json":{
-              "schema":{
-                "type":"array",
-                "items":{
-                  "$ref":"#/components/schemas/Medewerker"
+    "/v1/medewerkers": {
+      "put": {
+        "requestBody": {
+          "description": "Update employee details for the given company ID",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Medewerker"
                 }
               }
             }
           },
-          "required":true
+          "required": true
         },
-        "tags":[
+        "tags": [
           "Medewerkers"
         ],
-        "parameters":[
+        "parameters": [
           {
-            "name":"bedrijfid",
-            "description":"Sleutel voor het bedrijf waar de medewerker onder valt. Default is 'dat'.",
-            "schema":{
-              "type":"string"
+            "name": "bedrijfid",
+            "description": "Sleutel voor het bedrijf waar de medewerker onder valt. Default is 'dat'.",
+            "schema": {
+              "type": "string"
             },
-            "in":"query",
-            "required":true
+            "in": "query",
+            "required": true
           }
         ],
-        "responses":{
-          "204":{
-            "description":"No Content"
+        "responses": {
+          "204": {
+            "description": "No Content"
           },
-          "401":{
-            "content":{
-              "application/json":{
-                "schema":{
-                  "$ref":"#/components/schemas/ErrorResponse"
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
-            "description":"Unauthorized"
+            "description": "Unauthorized"
           },
-          "403":{
-            "content":{
-              "application/json":{
-                "schema":{
-                  "$ref":"#/components/schemas/ErrorResponse"
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
-            "description":"Forbidden"
+            "description": "Forbidden"
           },
-          "404":{
-            "content":{
-              "application/json":{
-                "schema":{
-                  "$ref":"#/components/schemas/ErrorResponse"
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
-            "description":"Not Found"
+            "description": "Not Found"
           },
-          "500":{
-            "content":{
-              "application/json":{
-                "schema":{
-                  "$ref":"#/components/schemas/ErrorResponse"
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             },
-            "description":"Internal Server Error"
+            "description": "Internal Server Error"
           }
         },
-        "operationId":"Put-by-Employee-Id"
+        "operationId": "Put-by-Employee-Id"
       }
     }
   },
-  "components":{
-    "schemas":{
-      "ErrorResponse":{
-        "type":"object",
-        "properties":{
-          "timestamp":{
-            "format":"int64",
-            "type":"integer"
+  "components": {
+    "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "format": "int64",
+            "type": "integer"
           },
-          "status":{
-            "format":"int32",
-            "type":"integer"
+          "status": {
+            "format": "int32",
+            "type": "integer"
           },
-          "code":{
-            "type":"string"
+          "code": {
+            "type": "string"
           },
-          "error":{
-            "type":"string"
+          "error": {
+            "type": "string"
           },
-          "message":{
-            "type":"string"
+          "message": {
+            "type": "string"
           }
         }
       },
-      "RelatieDetails":{
-        "description":"RelatieDetails",
-        "type":"object",
-        "properties":{
-          "relatieId":{
-            "type":"string"
+      "RelatieDetails": {
+        "description": "RelatieDetails",
+        "type": "object",
+        "properties": {
+          "relatieId": {
+            "type": "string"
           },
-          "voornaam":{
-            "type":"string"
+          "voornaam": {
+            "type": "string"
           },
-          "achternaam":{
-            "type":"string"
+          "achternaam": {
+            "type": "string"
           },
-          "tussenvoegsel":{
-            "type":"string"
+          "tussenvoegsel": {
+            "type": "string"
           },
-          "initialen":{
-            "type":"string"
+          "initialen": {
+            "type": "string"
           },
-          "geslacht":{
-            "type":"string"
+          "geslacht": {
+            "type": "string"
           },
-          "burgelijkestaat":{
-            "type":"string"
+          "burgelijkestaat": {
+            "type": "string"
           },
-          "geboortedatum":{
-            "format":"date",
-            "type":"string"
+          "geboortedatum": {
+            "format": "date",
+            "type": "string"
           },
-          "telefoonnummer":{
-            "type":"string"
+          "telefoonnummer": {
+            "type": "string"
           },
-          "mobielnummer":{
-            "type":"string"
+          "mobielnummer": {
+            "type": "string"
           },
-          "emailadres":{
-            "type":"string"
+          "emailadres": {
+            "type": "string"
           },
-          "iban":{
-            "type":"string"
+          "iban": {
+            "type": "string"
           }
         }
       },
-      "Medewerker":{
-        "description":"Medewerker gegevens (gebaseerd op subset van VERA 3.2-RELREL-basis)",
-        "type":"object",
-        "properties":{
-          "identificatie":{
-            "description":"Gebruikersnaam van medewerker",
-            "type":"string"
+      "Medewerker": {
+        "description": "Medewerker gegevens (gebaseerd op subset van VERA 3.2-RELREL-basis)",
+        "type": "object",
+        "properties": {
+          "identificatie": {
+            "description": "Gebruikersnaam van medewerker",
+            "type": "string"
           },
-          "rol":{
-            "type":"string"
+          "rol": {
+            "type": "string"
           },
-          "natuurlijkPersoon":{
-            "$ref":"#/components/schemas/NatuurlijkPersoon"
+          "natuurlijkPersoon": {
+            "$ref": "#/components/schemas/NatuurlijkPersoon"
           },
-          "contactGegevens":{
-            "$ref":"#/components/schemas/ContactGegevens"
+          "contactGegevens": {
+            "$ref": "#/components/schemas/ContactGegevens"
           },
-          "extraElementen":{
-            "$ref":"#/components/schemas/ExtraElementen"
+          "extraElementen": {
+            "$ref": "#/components/schemas/ExtraElementen"
           }
         }
       },
-      "NatuurlijkPersoon":{
-        "description":"Natuurlijk persoon (subset van VERA 3.2-RELNAT-basis)",
-        "type":"object",
-        "properties":{
-          "voornaam":{
-            "type":"string"
+      "NatuurlijkPersoon": {
+        "description": "Natuurlijk persoon (subset van VERA 3.2-RELNAT-basis)",
+        "type": "object",
+        "properties": {
+          "voornaam": {
+            "type": "string"
           },
-          "initialen":{
-            "type":"string"
+          "initialen": {
+            "type": "string"
           },
-          "tussenvoegsels":{
-            "type":"string"
+          "tussenvoegsels": {
+            "type": "string"
           },
-          "achternaam":{
-            "type":"string"
+          "achternaam": {
+            "type": "string"
           },
-          "roepnaam":{
-            "type":"string"
+          "roepnaam": {
+            "type": "string"
           }
         }
       },
-      "ContactGegevens":{
-        "type":"object",
-        "properties":{
-          "telefoonnummers":{
-            "type":"array",
-            "items":{
-              "$ref":"#/components/schemas/Telefoonnummer"
+      "ContactGegevens": {
+        "type": "object",
+        "properties": {
+          "telefoonnummers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Telefoonnummer"
             }
           },
-          "emailAdressen":{
-            "type":"array",
-            "items":{
-              "$ref":"#/components/schemas/Email"
+          "emailAdressen": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Email"
             }
           }
         }
       },
-      "Telefoonnummer":{
-        "description":"Contactgegeven (subset van VERA 3.2-RELTEL-basis)",
-        "type":"object",
-        "properties":{
-          "soort":{
-            "type":"string"
+      "Telefoonnummer": {
+        "description": "Contactgegeven (subset van VERA 3.2-RELTEL-basis)",
+        "type": "object",
+        "properties": {
+          "soort": {
+            "type": "string"
           },
-          "detailSoort":{
-            "type":"string"
+          "detailSoort": {
+            "type": "string"
           },
-          "landnummer":{
-            "type":"string"
+          "landnummer": {
+            "type": "string"
           },
-          "netnummer":{
-            "type":"string"
+          "netnummer": {
+            "type": "string"
           },
-          "abonneenummer":{
-            "type":"string"
+          "abonneenummer": {
+            "type": "string"
           },
-          "extensie":{
-            "type":"string"
+          "extensie": {
+            "type": "string"
           },
-          "dagdelen":{
-            "type":"string"
+          "dagdelen": {
+            "type": "string"
           }
         }
       },
-      "Email":{
-        "type":"object",
-        "properties":{
-          "soort":{
-            "type":"string"
+      "Email": {
+        "type": "object",
+        "properties": {
+          "soort": {
+            "type": "string"
           },
-          "detailSoort":{
-            "type":"string"
+          "detailSoort": {
+            "type": "string"
           },
-          "emailAdres":{
-            "type":"string"
+          "emailAdres": {
+            "type": "string"
           }
         }
       },
-      "ExtraElementen":{
-        "type":"object",
-        "properties":{
-          "isPrimaireRolInvulling":{
-            "description":"Primaire invulling van rol",
-            "type":"boolean"
+      "ExtraElementen": {
+        "type": "object",
+        "properties": {
+          "isPrimaireRolInvulling": {
+            "description": "Primaire invulling van rol",
+            "type": "boolean"
           },
-          "rolInvullingVolgorde":{
-            "type":"integer"
+          "rolInvullingVolgorde": {
+            "type": "integer"
           },
-          "axUser":{
-            "description":"Username in AX",
-            "type":"string"
+          "axUser": {
+            "description": "Username in AX",
+            "type": "string"
           },
-          "relatie":{
-            "$ref":"#/components/schemas/Relatie"
+          "relatie": {
+            "$ref": "#/components/schemas/Relatie"
           },
-          "bedrijf":{
-            "$ref":"#/components/schemas/Bedrijf"
+          "bedrijf": {
+            "$ref": "#/components/schemas/Bedrijf"
           }
         }
       },
-      "Relatie":{
-        "type":"object",
-        "properties":{
-          "identificatie":{
-            "type":"string"
+      "Relatie": {
+        "type": "object",
+        "properties": {
+          "identificatie": {
+            "type": "string"
           }
         }
       },
-      "Bedrijf":{
-        "type":"object",
-        "properties":{
-          "identificatie":{
-            "type":"string"
+      "Bedrijf": {
+        "type": "object",
+        "properties": {
+          "identificatie": {
+            "type": "string"
           }
         }
       }
     },
-    "securitySchemes":{
-      "OAuth2":{
-        "type":"oauth2",
-        "flows":{
-          "clientCredentials":{
-            "tokenUrl":"https://sso-rh-sso.apps.openshift-ota.nah-de-alliantie.nl/auth/realms/3scale-stg/protocol/openid-connect/token",
-            "scopes":{
-
-            }
+    "securitySchemes": {
+      "OAuth2": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "https://sso-rh-sso.apps.openshift-ota.nah-de-alliantie.nl/auth/realms/3scale-stg/protocol/openid-connect/token",
+            "scopes": {}
           },
-          "password":{
-            "tokenUrl":"https://sso-rh-sso.apps.openshift-ota.nah-de-alliantie.nl/auth/realms/3scale-stg/protocol/openid-connect/token",
-            "scopes":{
-
-            }
+          "password": {
+            "tokenUrl": "https://sso-rh-sso.apps.openshift-ota.nah-de-alliantie.nl/auth/realms/3scale-stg/protocol/openid-connect/token",
+            "scopes": {}
           }
         }
       }
     }
   },
-  "tags":[
+  "tags": [
     {
-      "name":"alive-healthcheck"
+      "name": "alive-healthcheck"
     },
     {
-      "name":"IBAN"
+      "name": "IBAN"
     },
     {
-      "name":"Relaties"
+      "name": "Relaties"
     }
   ],
-  "servers":[
+  "servers": [
     {
-      "url":"https://anonymizer-api-rh-apicast-stg.apps.openshift-ota.nah-de-alliantie.nl/"
+      "url": "https://anonymizer-api-rh-apicast-stg.apps.openshift-ota.nah-de-alliantie.nl/"
     }
   ],
-  "security":[
+  "security": [
     {
-      "OAuth2":[
-
-      ]
+      "OAuth2": []
     }
   ]
 }
