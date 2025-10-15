@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c49d531f-db4c-4597-98ac-ccc6b6b3d8fc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/3scale/openapi/openapi-operator-api-v3.0.2.yml" beforeDir="false" afterPath="$PROJECT_DIR$/3scale/openapi/openapi-operator-api-v3.0.2.yml" afterDir="false" />
-    </list>
+    <list default="true" id="c49d531f-db4c-4597-98ac-ccc6b6b3d8fc" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

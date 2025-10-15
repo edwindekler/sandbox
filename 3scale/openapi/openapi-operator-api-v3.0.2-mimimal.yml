@@ -1,0 +1,21 @@
+openapi: 3.0.2
+info:
+  title: operator-api
+  version: 0.0.1
+  description: API for anonymizing data in Tobias365
+x-3scale-product:
+  applicationPlans:  ## map[string]github.com/3scale/3scale-operator/apis/capabilities/v1beta1.ApplicationPlanSpec
+    premium:
+      published: true
+paths:
+  /pet:
+    get:
+      operationId: "getPet"
+      responses:
+        405:
+          description: "invalid input"
+      x-3scale-operation:  ## Operation-level 3scale extension
+        mappingRule:
+          metricMethodRef: "metric01"  ## Optional. If let unset, metricMethodRef will be set to the operationId by default.
+          increment: 2
+          last: true
