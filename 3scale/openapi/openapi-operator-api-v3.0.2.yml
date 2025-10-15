@@ -3,12 +3,10 @@ info:
   title: operator-api
   version: 0.0.1
   description: API for anonymizing data in Tobias365
-X-3scale-product:
-  metrics:  ## map[string]github.com/3scale/3scale-operator/apis/capabilities/v1beta1.MetricSpec
-    metric01:  ## This system name needs to be unique across all methods AND metrics
-      friendlyName: "My Metric 01"
-      unit: "hits"
-      description: "This is a custom metric"
+x-3scale-product:
+  applicationPlans:  ## map[string]github.com/3scale/3scale-operator/apis/capabilities/v1beta1.ApplicationPlanSpec
+    premium:
+      published: true
 paths:
   /healthcheck/alive:
     get:
@@ -36,6 +34,11 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal Server Error
       operationId: alive-healthcheck
+      x-3scale-operation:  ## Operation-level 3scale extension
+        mappingRule:
+          metricMethodRef: "metric01"  ## Optional. If let unset, metricMethodRef will be set to the operationId by default.
+          increment: 2
+          last: true
   /v1/iban:
     get:
       tags:
