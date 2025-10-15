@@ -317,21 +317,21 @@ components:
       properties:
         identificatie:
           type: string
-  securitySchemes:
-    OAuth2:
-      type: oauth2
-      flows:
-        clientCredentials:
-          tokenUrl: https://sso-rh-sso.apps.openshift-ota.nah-de-alliantie.nl/auth/realms/3scale-stg/protocol/openid-connect/token
-          scopes: {}
-        password:
-          tokenUrl: https://sso-rh-sso.apps.openshift-ota.nah-de-alliantie.nl/auth/realms/3scale-stg/protocol/openid-connect/token
-          scopes: {}
+#  securitySchemes:
+#    OAuth2:
+#      type: oauth2
+#      flows:
+#        clientCredentials:
+#          tokenUrl: https://sso-rh-sso.apps.openshift-ota.nah-de-alliantie.nl/auth/realms/3scale-stg/protocol/openid-connect/token
+#          scopes: {}
+#        password:
+#          tokenUrl: https://sso-rh-sso.apps.openshift-ota.nah-de-alliantie.nl/auth/realms/3scale-stg/protocol/openid-connect/token
+#          scopes: {}
 tags:
   - name: alive-healthcheck
   - name: IBAN
   - name: Relaties
 servers:
   - url: https://anonymizer-api-rh-apicast-stg.apps.openshift-ota.nah-de-alliantie.nl/
-security:
-  - OAuth2: []
+#security:
+#  - OAuth2: []
