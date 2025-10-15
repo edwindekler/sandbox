@@ -33,7 +33,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
           description: Internal Server Error
-      operationId: alive-healthcheck
+      operationId: alive-healthcheck2
       x-3scale-operation:  ## Operation-level 3scale extension
         mappingRule:
           metricMethodRef: "metric01"  ## Optional. If let unset, metricMethodRef will be set to the operationId by default.
